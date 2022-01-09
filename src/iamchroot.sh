@@ -57,7 +57,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 yes $root_password | passwd
 
 rm /etc/skel/.bash*
-useradd -D -s /bin/zsh
+useradd -D -s /bin/bash
 
 useradd -m $my_username
 
@@ -71,7 +71,7 @@ sed -i '/%wheel ALL=(ALL) ALL/s/^#//g' /etc/sudoers
 # Other stuff you should do
 rc-update add connmand default
 
-[[ $my_fs == "ext4" ]] && rc-update add lvm boot
+[[ $my_fs == "ext4" ]] && ln -s /etc/sv/lvm /var/lvm
 
 printf "\n$my_swap\t\tswap\t\tswap\t\tsw\t0 0\n" >> /etc/fstab
 
@@ -84,7 +84,7 @@ if [[ $encrypted != "n" && $my_fs == "btrfs" ]]; then
     yes $cryptpass | cryptsetup luksAddKey $part2 /root/.keyfiles/main
     printf "dmcrypt_key_timeout=1\ndmcrypt_retries=5\n\ntarget='swap'\nsource=UUID='$swap_uuid'\nkey='/root/.keyfiles/main'\n#\n" > /etc/conf.d/dmcrypt
 
-    rc-update add dmcrypt boot
+   ln -s /etc/sv/dmcrypt /var/dmcrypt
 fi
 
 # Configure mkinitcpio
