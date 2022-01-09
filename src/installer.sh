@@ -94,6 +94,6 @@ mount $part1 /mnt/boot
 [[ $(grep 'vendor' /proc/cpuinfo) == *"Amd"* ]] && ucode="amd-ucode"
 
 # Install base system and kernel
-basestrap /mnt base base-devel openrc elogind-openrc $fs_pkgs efibootmgr grub $ucode zsh dhcpcd wpa_supplicant connman-openrc
+basestrap /mnt base base-devel runit elogind-runit $fs_pkgs efibootmgr grub $ucode bash dhcpcd wpa_supplicant connman-runit
 basestrap /mnt linux linux-firmware linux-headers mkinitcpio
 fstabgen -U /mnt > /mnt/etc/fstab
