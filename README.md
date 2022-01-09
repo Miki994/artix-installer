@@ -1,4 +1,4 @@
-# artix-installer
+# artix-installer for RUNIT BASE INSTALL
 
 A simple installer for Artix Linux
 
